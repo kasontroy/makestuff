@@ -1,0 +1,2783 @@
+
+/*
+
+The Framework Core
+
+The framework core normalizes CSS to get a consistent baseline of styles 
+cross-browser, then establishes some simple but key modules and helpers to be 
+used in the rest of the site's styling.
+
+The core is not meant to be altered in any way. If you need to change the way 
+the core handles a certain style or class, extend it with another declaration 
+later in the stylesheet.
+
+Because the core always remains the same, both the admin and client CSS themes 
+of the framework share the same exact core. Altering the core would alter the 
+sitewide CSS as well as the admin CSS. So...**don't touch the core!**
+
+Styleguide 1.0.0
+
+*/
+/*
+
+Normalize
+
+Rather than use a traditional reset stylesheet, we want to leverage default 
+browser styles and tweak them to be more consistent across the board. It's the 
+differenc between using a shovel versus a bulldozer.
+
+The code for this normalization is taken almost entirely from 
+[Normalize.css][ncss] and adjusted to our specific needs.
+
+  [ncss]: http://necolas.github.io/normalize.css/
+
+Styleguide 1.1.0
+
+*/
+/*
+
+HTML5 Display Definitions
+
+Set the appropriate `display` definitions for new HTML5 elements.
+
+The majority will be displayed `block`.
+
+*/
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+}
+/*
+
+Some, however, need to be `inline-block` with an IE7 fallback.
+
+*/
+audio,
+canvas,
+video {
+  display: inline-block;
+}
+.lte7 audio,
+.lte7 canvas,
+.lte7 video {
+  display: inline;
+  zoom: 1;
+}
+/*
+
+Audio
+
+From Normalize.css:
+
+> Prevents modern browsers from displaying `audio` without controls.
+> Remove excess height in iOS5 devices.
+
+*/
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+[hidden] {
+  display: none;
+}
+/*
+
+Type
+
+*/
+/*
+
+HTML Font Size Adjust
+
+1. Corrects text resizing oddly in IE6/7 when body `font-size` is set using
+   `em` units.
+2. Prevents iOS text size adjust after orientation change, without disabling
+   user zoom.
+
+*/
+html {
+  font-size: 100%;
+  /* 1 */
+
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+
+}
+html,
+button,
+input,
+select,
+textarea {
+  font-family: sans-serif;
+}
+abbr[title] {
+  border: none;
+}
+i,
+cite,
+address {
+  font-style: normal;
+}
+dfn {
+  font-style: italic;
+}
+b {
+  font-weight: normal;
+}
+strong {
+  font-weight: bold;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre,
+blockquote,
+menu,
+ul,
+ol,
+dl,
+table,
+figure {
+  /* Display & Box Model */
+
+  margin: 1.6666666666666667em 0 0 0;
+  /* Other */
+
+  font-size: 1em;
+}
+menu,
+ol,
+ul {
+  padding-left: 2.5em;
+}
+menu.unstyled,
+ol.unstyled,
+ul.unstyled {
+  padding-left: 0;
+  list-style: none outside none;
+}
+li ul,
+li ol {
+  margin-top: 0.8333333333333334em;
+  margin-bottom: 0.8333333333333334em;
+}
+dd {
+  margin-left: 2.5em;
+}
+blockquote {
+  padding: 1.25em 2.5em;
+}
+blockquote > :first-child {
+  margin-top: 0;
+}
+q {
+  quotes: none;
+}
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+mark {
+  background: #ff0;
+  color: #000;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif;
+  font-size: 1em;
+}
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+small {
+  font-size: 1em;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+a:focus,
+a:active,
+a:hover {
+  outline: 0;
+}
+img {
+  max-width: 100%;
+  border: 0;
+}
+.lte7 img {
+  -ms-interpolation-mode: bicubic;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+form {
+  margin: 0;
+}
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+legend {
+  width: 100%;
+  border: 0;
+  padding: 0;
+  display: block;
+  white-space: normal;
+}
+.lte7 legend {
+  margin-left: -7px;
+}
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  margin: 0;
+  display: block;
+}
+button .lte7,
+input .lte7,
+select .lte7,
+textarea .lte7 {
+  vertical-align: middle;
+}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  display: inline-block;
+  cursor: pointer;
+}
+button .lte7,
+html input[type="button"] .lte7,
+input[type="reset"] .lte7,
+input[type="submit"] .lte7 {
+  overflow: visible;
+  display: inline;
+  zoom: 1;
+}
+button,
+input {
+  line-height: normal;
+}
+button[disabled],
+input[disabled] {
+  cursor: default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  margin: 3px;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  vertical-align: top;
+}
+input[type="checkbox"] .lte7,
+input[type="radio"] .lte7 {
+  width: 13px;
+  height: 13px;
+}
+input[type="search"] {
+  -webkit-appearance: textfield;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+textarea {
+  overflow: auto;
+  vertical-align: top;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/*
+
+Presentational Classes
+
+The framework provides some helpful and handy presentational classes that are 
+most powerful as quick fixes to spacing, floating, and alignment.
+
+Styleguide 1.2.0
+
+*/
+/* 
+
+Spacing Helpers
+
+Spacing helpers are quick but powerful classes that add margin or padding to 
+any given element. These classes are `!important`, so they override all other 
+styles.
+
+* `p`, `m`                          =   padding, margin  
+* `a`, `t`, `r`, `b`, `l`, `h`, `v` =   all, top, right, bottom, left, horizontal, vertical  
+* `s`, `m`, `l`, `n`                =   small (~`5px`), medium (~`10px`), large (~`20px`), none (`0`)
+
+For example: `.pam` means "padding, all, medium".
+
+**Note:** These are all based on the current element's font size and the 
+project's vertical rhythm (even on the sides, to provide uniform spacing). 
+As such, they require `_vars.less`.
+
+The default styling:
+
+Markup: <div class="panel {$modifiers}">An Example of Spacing Adjustment</div>
+
+.pam - padding, all, medium
+.mhl - margin, horizontal, large
+.pal.mbl.mtn - padding, all, large; margin, bottom, large; margin, top, none;
+
+Styleguide 1.2.1
+
+*/
+.ptn,
+.pvn,
+.pan {
+  padding-top: 0 !important;
+}
+.pts,
+.pvs,
+.pas {
+  padding-top: 0.4166666666666667em !important;
+}
+.ptm,
+.pvm,
+.pam {
+  padding-top: 0.8333333333333334em !important;
+}
+.ptl,
+.pvl,
+.pal {
+  padding-top: 1.6666666666666667em !important;
+}
+.prn,
+.phn,
+.pan {
+  padding-right: 0 !important;
+}
+.prs,
+.phs,
+.pas {
+  padding-right: 0.4166666666666667em !important;
+}
+.prm,
+.phm,
+.pam {
+  padding-right: 0.8333333333333334em !important;
+}
+.prl,
+.phl,
+.pal {
+  padding-right: 1.6666666666666667em !important;
+}
+.pbn,
+.pvn,
+.pan {
+  padding-bottom: 0 !important;
+}
+.pbs,
+.pvs,
+.pas {
+  padding-bottom: 0.4166666666666667em !important;
+}
+.pbm,
+.pvm,
+.pam {
+  padding-bottom: 0.8333333333333334em !important;
+}
+.pbl,
+.pvl,
+.pal {
+  padding-bottom: 1.6666666666666667em !important;
+}
+.pln,
+.phn,
+.pan {
+  padding-left: 0 !important;
+}
+.pls,
+.phs,
+.pas {
+  padding-left: 0.4166666666666667em !important;
+}
+.plm,
+.phm,
+.pam {
+  padding-left: 0.8333333333333334em !important;
+}
+.pll,
+.phl,
+.pal {
+  padding-left: 1.6666666666666667em !important;
+}
+.mtn,
+.mvn,
+.man {
+  margin-top: 0 !important;
+}
+.mts,
+.mvs,
+.mas {
+  margin-top: 0.4166666666666667em !important;
+}
+.mtm,
+.mvm,
+.mam {
+  margin-top: 0.8333333333333334em !important;
+}
+.mtl,
+.mvl,
+.mal {
+  margin-top: 1.6666666666666667em !important;
+}
+.mrn,
+.mhn,
+.man {
+  margin-right: 0 !important;
+}
+.mrs,
+.mhs,
+.mas {
+  margin-right: 0.4166666666666667em !important;
+}
+.mrm,
+.mhm,
+.mam {
+  margin-right: 0.8333333333333334em !important;
+}
+.mrl,
+.mhl,
+.mal {
+  margin-right: 1.6666666666666667em !important;
+}
+.mbn,
+.mvn,
+.man {
+  margin-bottom: 0 !important;
+}
+.mbs,
+.mvs,
+.mas {
+  margin-bottom: 0.4166666666666667em !important;
+}
+.mbm,
+.mvm,
+.mam {
+  margin-bottom: 0.8333333333333334em !important;
+}
+.mbl,
+.mvl,
+.mal {
+  margin-bottom: 1.6666666666666667em !important;
+}
+.mln,
+.mhn,
+.man {
+  margin-left: 0 !important;
+}
+.mls,
+.mhs,
+.mas {
+  margin-left: 0.4166666666666667em !important;
+}
+.mlm,
+.mhm,
+.mam {
+  margin-left: 0.8333333333333334em !important;
+}
+.mll,
+.mhl,
+.mal {
+  margin-left: 1.6666666666666667em !important;
+}
+/*
+
+Text Align
+
+Simple classes to adjust your text alignment. They can be added to individual elements or on wrapping elements (an outer `div`, perhaps) to adjust the alignment of all the child elements.
+
+The default styling:
+
+Markup:
+<p class="{$modifiers}">Aligned Text</p>
+
+.align-left - Usually the same as the site default
+.align-center - Center aligns text as well as any non-block child elements
+.align-right - Aligns things to the right
+
+Styleguide 1.2.2
+
+*/
+.align-left {
+  text-align: left;
+}
+.align-center {
+  text-align: center;
+}
+.align-right {
+  text-align: right;
+}
+/*
+
+Floats
+
+Next, we have classes for floating elements.
+
+Without floating:
+
+Markup:
+<div class="panel {$modifiers} gt-third gd-third">A Floating Panel</div>
+
+.float-left - Floats the element to the left
+.float-center - Doesn't actually float, but rather sets margins to `auto`. *Requires a set width!*
+.float-right - Floats the element to the right
+
+Styleguide 1.2.3
+
+*/
+.float-left {
+  float: left;
+}
+.float-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.float-right {
+  float: right;
+}
+.clear {
+  clear: both;
+}
+/*
+
+"New Line"
+
+Turns an `inline` or `inline-block` element into a `block` one. Like magic, 
+turns whatever it touches into block.
+
+Markup:
+This is text with a <span class="new-line">span tag</span> nested inline
+
+Styleguide 1.2.4
+
+*/
+.new-line {
+  display: block;
+}
+.group {
+  /* Mixins */
+
+}
+.lte7 .group {
+  zoom: 1;
+}
+.group:before,
+.group:after {
+  content: "\0020";
+  height: 0;
+  display: block;
+  overflow: hidden;
+}
+.group:after {
+  clear: both;
+}
+/*
+
+"Is Hidden"
+
+Visually hides content in a way that leaves it accessible to screen readers. 
+Like more magic, makes the visible invisible.
+
+Markup:
+Now you see me<span class="is-hidden">, now you don't.</span>
+
+Styleguide 1.2.5
+
+*/
+.is-hidden {
+  /* Mixins */
+
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  position: absolute;
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+
+  clip: rect(1px, 1px, 1px, 1px);
+  border: 0;
+  overflow: hidden;
+}
+.is-hidden.focusable:active,
+.is-hidden.focusable:focus {
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip: auto;
+  overflow: visible;
+  position: static;
+}
+body:hover .is-hidden a,
+body:hover .is-hidden input,
+body:hover .is-hidden button {
+  display: none;
+}
+/*
+
+Modules
+
+Flexible, generic, reusable components for layout and interaction.
+
+Styleguide 1.3.0
+
+*/
+/*
+
+Media Object
+
+The Media Object is an image (or media-type) to the left with (typically) 
+descriptive content to the right. The media object can be whatever size it 
+wants, the basic format will remain the same. (Text will **not** wrap.)  This 
+has any number of applications, such as a checkbox next to a label with lots 
+of text.
+
+See: [The Media Object Saves Hundreds of Lines of Code][1]
+
+  [1]: http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/
+
+Markup:
+<div class="media-object">
+    <figure class="object mtn">
+        <img src="http://placehold.it/200" alt="Media Object" />
+    </figure>
+    <div class="desc">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas 
+        eget risus libero, id venenatis ante. Curabitur iaculis turpis vitae 
+        velit luctus in luctus mi molestie. Curabitur bibendum magna lorem. 
+        Curabitur enim lectus, scelerisque non pellentesque in, suscipit eget 
+        nibh. Pellentesque vitae nunc vel tortor rhoncus euismod. Maecenas 
+        pretium porta ultricies. Quisque feugiat sem sit amet sapien consequat 
+        non fringilla leo suscipit.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas 
+        eget risus libero, id venenatis ante. Curabitur iaculis turpis vitae 
+        velit luctus in luctus mi molestie. Curabitur bibendum magna lorem. 
+        Curabitur enim lectus, scelerisque non pellentesque in, suscipit eget 
+        nibh. Pellentesque vitae nunc vel tortor rhoncus euismod. Maecenas 
+        pretium porta ultricies. Quisque feugiat sem sit amet sapien consequat 
+        non fringilla leo suscipit.</p>
+    </div>
+</div>
+
+Styleguide 1.3.1
+
+*/
+.media-object,
+.media-object .desc {
+  overflow: hidden;
+}
+.media-object.checkbox-item .object {
+  float: left;
+  margin-right: 0.375em;
+}
+.media-object .object img {
+  display: block;
+}
+.media-object .desc {
+  display: block;
+}
+/*
+
+Media Grid
+
+The Media Grid allows you to place a grid of photos or videos (catalog or 
+retail products, etc.) without floating them, alleviating the need to concern 
+yourself with clearing the floats should an object extend further than another.
+
+The `.object` class is applied to the list item. You then apply grid-system 
+classes to the `.object` to constrain the widths.
+
+Markup:
+<ul class="unstyled media-grid gm-row gt-row gd-row">
+    <li class="gm-columns gm-half gt-columns gt-third gd-columns gd-third object">
+        <img src="http://placehold.it/300 alt="Media Object" />
+        <p>Here's a subtitle</p>
+    </li>
+    <li class="gm-columns gm-half gt-columns gt-third gd-columns gd-third object">
+        <img src="http://placehold.it/300 alt="Media Object" />
+    </li>
+    <li class="gm-columns gm-half gt-columns gt-third gd-columns gd-third object">
+        <img src="http://placehold.it/300 alt="Media Object" />
+    </li>
+    <li class="gm-columns gm-half gt-columns gt-third gd-columns gd-third object">
+        <img src="http://placehold.it/300 alt="Media Object" />
+        <p>Look, I don't catch on the subtitle!</p>
+    </li>
+</ul>
+
+Styleguide 7.2
+
+*/
+.media-grid {
+  margin-top: 0;
+  padding: 0;
+  letter-spacing: -0.31em;
+  word-spacing: -0.43em;
+}
+.lte7 .media-grid {
+  letter-spacing: normal;
+}
+.media-grid .object {
+  list-style: none outside none;
+  letter-spacing: normal;
+  word-spacing: normal;
+  vertical-align: top;
+  display: inline-block;
+  margin-top: 1.6666666666666667em;
+}
+.lte7 .media-grid .object {
+  display: inline;
+  zoom: 1;
+}
+.media-grid .object img {
+  display: block;
+}
+.media-grid .object.gm-columns,
+.media-grid .object.gt-columns,
+.media-grid .object.gd-columns {
+  float: none;
+}
+/*
+
+Nav
+
+The basic `.nav` module simply removes bullets from lists and inlines the list 
+items, making the link `inline-block`. The idea is to give the skeleton of a 
+horizontal navigation without adding too much style (yet).
+
+Markup:
+<ul class="nav">
+    <li><a href="#">Nav Item</a></li>
+    <li><a href="#">Nav Item</a></li>
+    <li><a href="#">Nav Item</a></li>
+    <li><a href="#">Nav Item</a></li>
+</ul>
+
+Styleguide 1.3.3
+
+*/
+.nav {
+  padding-left: 0;
+}
+.nav li {
+  display: inline;
+  list-style: none outside none;
+}
+.nav a {
+  display: inline-block;
+}
+.lte7 .nav a {
+  display: inline;
+  zoom: 1;
+}
+.nav.forceful li {
+  display: block;
+}
+.nav.forceful a,
+.lte7 .nav.forceful a {
+  display: block;
+}
+/*
+
+Tabs
+
+The tabs module (and accompanying plugin) creates a very basic widget that 
+allows embedding and basic styling.
+
+Markup:
+<section class="tabs">
+    <ul class="forceful nav">
+        <li>
+            <a class="js-tabs is-current" data-reveal="first-tab" data-reveal-group="tabbed-widget" href="#first-tab">
+                First Tab
+            </a>
+        </li>
+        <li>
+            <a class="js-tabs" data-reveal="second-tab" data-reveal-group="tabbed-widget" href="#second-tab">
+                Second Tab
+            </a>
+        </li>
+        <li>
+            <a class="js-tabs" data-reveal="third-tab" data-reveal-group="tabbed-widget" href="#third-tab">
+                Third Tab
+            </a>
+        </li>
+        <li>
+            <a class="js-tabs" data-reveal="fourth-tab" data-reveal-group="tabbed-widget" href="#fourth-tab">
+                Fourth Tab
+            </a>
+        </li>
+    </ul>
+    <div class="section">
+        <section id="first-tab" class="tab is-current">
+            <h3>First Tab</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+        <section id="second-tab" class="tab">
+            <h3>Second Tab</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+        <section id="third-tab" class="tab">
+            <h3>Third Tab</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+        <section id="fourth-tab" class="tab">
+            <h3>Fourth Tab</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+    </div>
+</section>
+
+Styleguide 3.2
+
+*/
+.js .tabs .section {
+  position: relative;
+}
+.js .tabs .tab {
+  display: none;
+}
+.js .tabs .tab.is-current {
+  display: block;
+}
+/*
+
+Pagination
+
+An extension of the basic `.nav` module that simply adds padding enough for 
+pagination and makes the module `inline-block` so it can easily be aligned 
+(left, center, right).
+
+Markup:
+<ol class="pagination nav">
+    <li class="first disabled"><a href="#">Previous</a></li>
+    <li><a href="#" class="is-current">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">6</a></li>
+    <li><a href="#">7</a></li>
+    <li><a href="#">8</a></li>
+    <li><a href="#">9</a></li>
+    <li><a href="#">10</a></li>
+    <li class="last"><a href="#">Next</a></li>
+</ol>
+
+Styleguide 1.3.5
+
+*/
+.pagination {
+  display: inline-block;
+}
+.pagination li.disabled a,
+.pagination li.disabled a:hover,
+.pagination li.disabled a:focus {
+  cursor: default;
+}
+.pagination a {
+  padding: 0 0.625em;
+}
+/*
+
+Typography
+
+The framework encourages a system of typography that decouples HTML elements, 
+type styles, and size.
+
+Header tags inherit minimal styles such as relative spacing and a default 
+typeface and color. Their size (and the size of any element, for that matter), 
+is determined by a collection of size classes. Alternate heading styles are 
+given their own classes as well. As a quick-fix solution, each typeface used 
+also has its own standalone class solely for switching fonts.
+
+The idea is to create a smart collection of typography "LEGO bricks" that make 
+it easy to, with a few class assignments in the HTML, output any combination 
+of typographic style and size.
+
+Just be careful not to get carried away in created modular classes. Having 
+dozens of classes with only one attribute each would be like having a bucket 
+full of single-studded LEGO bricks.
+
+Styleguide 2.0
+
+*/
+@font-face {
+  font-family: "Museo Slab 700";
+  src: url("/resources/fonts/museo-slab/museo-slab-700.eot");
+  src: url("/resources/fonts/museo-slab/museo-slab-700.eot?#iefix") format('embedded-opentype'), url("/resources/fonts/museo-slab/museo-slab-700.woff") format('woff'), url("/resources/fonts/museo-slab/museo-slab-700.ttf") format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Museo 700";
+  src: url("/resources/fonts/museo/Museo700-Regular-webfont.eot");
+  src: url("/resources/fonts/museo/Museo700-Regular-webfont.eot?#iefix") format('embedded-opentype'), url("/resources/fonts/museo/Museo700-Regular-webfont.woff") format('woff'), url("/resources/fonts/museo/Museo700-Regular-webfont.ttf") format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url("/resources/fonts/source-sans-pro/SourceSansPro-Regular-webfont.eot");
+  src: url("/resources/fonts/source-sans-pro/SourceSansPro-Regular-webfont.eot?#iefix") format('embedded-opentype'), url("/resources/fonts/source-sans-pro/SourceSansPro-Regular-webfont.woff") format('woff'), url("/resources/fonts/source-sans-pro/SourceSansPro-Regular-webfont.ttf") format('truetype'), url("/resources/fonts/source-sans-pro/SourceSansPro-Regular-webfont.svg#SourceSansProRegular") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Source Sans Pro Bold";
+  src: url("/resources/fonts/source-sans-pro/SourceSansPro-Bold-webfont.eot");
+  src: url("/resources/fonts/source-sans-pro/SourceSansPro-Bold-webfont.eot?#iefix") format('embedded-opentype'), url("/resources/fonts/source-sans-pro/SourceSansPro-Bold-webfont.woff") format('woff'), url("/resources/fonts/source-sans-pro/SourceSansPro-Bold-webfont.ttf") format('truetype'), url("/resources/fonts/source-sans-pro/SourceSansPro-Bold-webfont.svg#SourceSansProBold") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Source Sans Pro Italic";
+  src: url("/resources/fonts/source-sans-pro/SourceSansPro-It-webfont.eot");
+  src: url("/resources/fonts/source-sans-pro/SourceSansPro-It-webfont.eot?#iefix") format('embedded-opentype'), url("/resources/fonts/source-sans-pro/SourceSansPro-It-webfont.woff") format('woff'), url("/resources/fonts/source-sans-pro/SourceSansPro-It-webfont.ttf") format('truetype'), url("/resources/fonts/source-sans-pro/SourceSansPro-It-webfont.svg#SourceSansProItalic") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Source Sans Pro Bold Italic";
+  src: url("/resources/fonts/source-sans-pro/SourceSansPro-BoldIt-webfont.eot");
+  src: url("/resources/fonts/source-sans-pro/SourceSansPro-BoldIt-webfont.eot?#iefix") format('embedded-opentype'), url("/resources/fonts/source-sans-pro/SourceSansPro-BoldIt-webfont.woff") format('woff'), url("/resources/fonts/source-sans-pro/SourceSansPro-BoldIt-webfont.ttf") format('truetype'), url("/resources/fonts/source-sans-pro/SourceSansPro-BoldIt-webfont.svg#SourceSansProBoldItalic") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Source Code Pro";
+  src: url("/resources/fonts/source-code-pro/source-code-pro-regular.eot");
+  src: url("/resources/fonts/source-code-pro/source-code-pro-regular.eot?#iefix") format('embedded-opentype'), url("/resources/fonts/source-code-pro/source-code-pro-regular.woff") format('woff'), url("/resources/fonts/source-code-pro/source-code-pro-regular.ttf") format('truetype'), url("/resources/fonts/source-code-pro/source-code-pro-regular.svg#SourceCodeProRegular") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Symbolset";
+  src: url("/resources/fonts/symbolset/ss-standard.eot");
+  src: url("/resources/fonts/symbolset/ss-standard.eot?#iefix") format('embedded-opentype'), url("/resources/fonts/symbolset/ss-standard.woff") format('woff'), url("/resources/fonts/symbolset/ss-standard.ttf") format('truetype'), url("/resources/fonts/symbolset/ss-standard.svg#SSStandardRegular") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Symbolset Social";
+  src: url("/resources/fonts/symbolset/ss-social-regular.eot");
+  src: url("/resources/fonts/symbolset/ss-social-regular.eot?#iefix") format('embedded-opentype'), url("/resources/fonts/symbolset/ss-social-regular.woff") format('woff'), url("/resources/fonts/symbolset/ss-social-regular.ttf") format('truetype'), url("/resources/fonts/symbolset/ss-social-regular.svg#SSSocialRegular") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Symbolset Social Circle";
+  src: url("/resources/fonts/symbolset/ss-social-circle.eot");
+  src: url("/resources/fonts/symbolset/ss-social-circle.eot?#iefix") format('embedded-opentype'), url("/resources/fonts/symbolset/ss-social-circle.woff") format('woff'), url("/resources/fonts/symbolset/ss-social-circle.ttf") format('truetype'), url("/resources/fonts/symbolset/ss-social-circle.svg#SSSocialCircle") format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.museo-slab-700 {
+  font-family: "Museo Slab 700", Helvetica, Arial, Verdana, serif;
+}
+.source-sans-regular {
+  font-family: "Source Sans Pro", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", sans-serif;
+}
+.source-sans-bold {
+  font-family: "Source Sans Pro Bold", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", Arial, sans-serif;
+}
+.source-sans-italic {
+  font-family: "Source Sans Pro Italic", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", Arial, sans-serif;
+}
+.source-sans-bold-italic {
+  font-family: "Source Sans Pro Bold Italic", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", Arial, sans-serif;
+}
+.symbolset {
+  font-family: "Symbolset";
+}
+.symbolset-social {
+  font-family: "Symbolset Social";
+}
+.symbolset-social-circle {
+  font-family: "Symbolset Social Circle";
+}
+[data-icon-position="solo"]:before,
+[data-icon-position="before"]:before,
+[data-icon-position="after"]:after,
+.data-icon {
+  content: attr(data-icon);
+  -webkit-font-smoothing: antialiased;
+  font-size: 0.75em;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
+  text-rendering: optimizeLegibility;
+  speak: none;
+  white-space: nowrap;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Symbolset";
+}
+.lte7 [data-icon-position="solo"]:before,
+.lte7 [data-icon-position="before"]:before,
+.lte7 [data-icon-position="after"]:after,
+.lte7 .data-icon {
+  display: inline;
+  zoom: 1;
+}
+.data-icon.data-icon-social {
+  font-family: "Symbolset Social";
+}
+.data-icon.data-icon-social-circle {
+  font-family: "Symbolset Social Circle";
+}
+[data-icon-position="before"]:before,
+[data-icon-position="before"] > .data-icon {
+  padding-right: 0.4166666666666667em;
+}
+[data-icon-position="after"]:after,
+[data-icon-position="after"] > .data-icon {
+  padding-left: 0.4166666666666667em;
+}
+.lte8.js [data-icon-position="before"]:before,
+.lte8.js [data-icon-position="solo"]:before,
+.lte8.js [data-icon-position="after"]:after {
+  content: none !important;
+  display: none;
+}
+body,
+.body-text {
+  font-family: "Source Sans Pro", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", sans-serif;
+}
+dt,
+th,
+.input-label,
+strong {
+  font-weight: normal;
+  font-family: "Source Sans Pro Bold", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", Arial, sans-serif;
+}
+em {
+  font-style: normal;
+  font-family: "Source Sans Pro Italic", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", Arial, sans-serif;
+}
+strong em,
+em strong {
+  font-style: normal;
+  font-weight: normal;
+  font-family: "Source Sans Pro Bold Italic", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", Arial, sans-serif;
+}
+/*
+
+Typographic Scale
+
+The building blocks for the site's type sizes. Almost exclusively, an element's font size is assigned with one of these classes. If a new size is needed, a new class is created here so it can be used and reused elsewhere.
+
+The list of type sizes can grow or shrink, but be vigilant in keeping the number of sizes to a minimum. A nice rule of thumb is that no two sizes can one pixel in difference (forcing you to choose one over the other, giving you one class where you previously had two).
+
+Styleguide 2.2
+
+*/
+/*
+
+Canon Text
+
+Markup:
+<p class="canon-text">Canon Text (48px)</p>
+
+Styleguide 2.2.1
+
+*/
+.wysiwyg h1,
+.canon-text,
+.wysiwyg .canon-text {
+  font-size: 24px;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+/*
+
+Paragon Text
+
+Markup:
+<p class="paragon-text">Paragon Text (28px)</p>
+
+Styleguide 2.2.2
+
+*/
+.wysiwyg h2,
+.paragon-text,
+.wysiwyg .paragon-text {
+  font-size: 20px;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+/*
+
+Primer Text
+
+Markup:
+<p class="primer-text">Primer Text (21px)</p>
+
+Styleguide 2.2.3
+
+*/
+.wysiwyg h3,
+.primer-text,
+.wysiwyg .primer-text {
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+/*
+
+Normal Text
+
+Markup:
+<p class="normal-text">Normal Text (16px)</p>
+
+Styleguide 2.2.4
+
+*/
+.wysiwyg h4,
+.normal-text,
+.wysiwyg .normal-text {
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 1.6666666666666667;
+}
+/*
+
+Petite Text
+
+Markup:
+<p class="petite-text">Petite Text (13px)</p>
+
+Styleguide 2.2.5
+
+*/
+.wysiwyg h5,
+.petite-text,
+.wysiwyg .petite-text {
+  font-size: 10px;
+  font-size: 0.625rem;
+  line-height: 1;
+}
+/*
+
+Minion Text
+
+Markup:
+<p class="minion-text">Minion Text (10px)</p>
+
+Styleguide 2.2.6
+
+*/
+.wysiwyg h6,
+.minion-text,
+.wysiwyg .minion-text {
+  font-size: 8px;
+  font-size: 0.5rem;
+  line-height: 1.25;
+}
+.wysiwyg h2,
+.wysiwyg h3,
+.wysiwyg h4,
+.wysiwyg h5,
+.wysiwyg h6 {
+  margin-top: 1.5em;
+}
+/*
+
+Heading Styles
+
+Styleguide 2.3
+
+*/
+/*
+
+Primary Heading
+
+Markup:
+<h2 class="primary-heading">Primary Heading</h2>
+
+Styleguide 2.3.1
+
+*/
+.primary-heading {
+  font-weight: normal;
+  font-family: "Asap", Helvetica, Arial, Verdana, serif;
+  color: #184b6f;
+}
+/*
+
+Secondary Heading
+
+Markup:
+<h2 class="secondary-heading">Secondary Heading</h2>
+
+Styleguide 2.3.2
+
+*/
+.secondary-heading {
+  font-family: "Source Sans Pro Bold", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", Arial, sans-serif;
+  color: #a9a6a7;
+  text-transform: uppercase;
+}
+/*
+
+Body Text
+
+Markup:
+<p>This is a paragraph of text. Some of the text may be <em>emphasised</em> and some it might even be <strong>strongly emphasised</strong>. Occasionally <q>quoted text</q> may be found within a paragraph ... and of course <a href="#">a link</a> may appear at any point in the text. The average paragraph contains five or six sentences although some may contain as little or one or two while others carry on for anything up to ten sentences and beyond.</p>
+
+Styleguide 2.4
+
+*/
+body {
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 1.6666666666666667;
+  color: #434142;
+}
+/*
+
+Blockquote
+
+A block of quoted text is particularly useful when presented as a pull-quote 
+within an article of text.
+
+Markup:
+<figure>
+    <blockquote class="primer-text">
+        <p>You were right about one thing: the negotiations were short.</p>
+    </blockquote>
+    <figcaption class="petite-text">Obi-Wan Kenobi</figcaption>
+</figure>
+
+Styleguide 2.5
+
+*/
+/*
+
+Lists
+
+Styleguide 2.6
+
+*/
+/*
+
+Ordered List
+
+Markup:
+<ol>
+    <li>I'm trying not to, kid.</li>
+    <li>Oh God, my uncle. How am I ever gonna explain this?</li>
+    <li>Still, she's got a lot of spirit. I don't know, what do you think?</li>
+    <li>Look, I ain't in this for your revolution, and I'm not in it for you, Princess. I expect to be well paid. I'm in it for the money.</li>
+</ol>
+
+Styleguide 2.6.1
+
+*/
+/*
+
+Unordered List
+
+Markup:
+<ul>
+    <li>The Force is strong with this one. I have you now.</li>
+    <li>The plans you refer to will soon be back in our hands.</li>
+    <li>Don't act so surprised, Your Highness. You weren't on any mercy mission this time. Several transmissions were beamed to this ship by Rebel spies. I want to know what happened to the plans they sent you.</li>
+    <li>Alderaan? I'm not going to Alderaan. I've got to go home. It's late, I'm in for it as it is.</li>
+</ul>
+
+Styleguide 2.6.2
+
+*/
+/*
+
+Unstyled List
+
+Markup:
+<ul class="unstyled">
+    <li>I call it luck.</li>
+    <li>Don't act so surprised, Your Highness.</li>
+    <li>I can't get involved! I've got work to do!</li>
+</ul>
+
+Styleguide 2.6.3
+
+*/
+code {
+  padding: 0 2px;
+  background: #f3f6f8;
+  border: 1px solid #cfcdcd;
+  font-size: 0.85em;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}
+pre code {
+  padding: 1.6666666666666667em;
+  display: block;
+}
+/*
+
+Interactive Elements
+
+Styleguide 3.0
+
+*/
+/*
+
+Buttons
+
+Default interactive button styles. This `.button` class can be applied to `<a>`, 
+`<button>`, or `<input>` elements. Button color and style classes can be combined 
+with size classes.
+
+Markup:
+<a class="{$modifiers} button" href="#">Link Element Button</a>
+<button class="{$modifiers} button">Button Element</button>
+<input class="{$modifiers} button" type="button" value="Input Element Button">
+
+.primary - A change from the default style, meant for primary actions (e.g., form submittal)
+.danger - Indicative of destructive action
+.tiny - Smallest button size available
+.small - Small button size, but not too small
+.large - Larger button size for big callouts
+.full-width - Button expands to fill width of its container
+
+Styleguide 3.1
+
+*/
+.button {
+  width: auto;
+  height: auto;
+  margin: 0;
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+  -webkit-appearance: none;
+  -webkit-background-clip: padding;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  outline: 0;
+  overflow: visible;
+  cursor: pointer;
+  vertical-align: middle;
+  padding: 0.8333333333333334em 1.5em;
+  border: 0.08333333333333333em solid #cfcdcd;
+  color: #837f81;
+  text-shadow: 0 0.08333333333333333em 0.08333333333333333em #ffffff;
+  margin-top: 1.6666666666666667em;
+  font-family: "Source Sans Pro Bold", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", Arial, sans-serif;
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  border-radius: 0.25em;
+  display: inline-block;
+  -webkit-box-shadow: inset 0 0.08333333333333333em 0.08333333333333333em rgba(255, 255, 255, 0.4), 0 0.16666666666666666em 0.16666666666666666em -0.08333333333333333em rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 0 0.08333333333333333em 0.08333333333333333em rgba(255, 255, 255, 0.4), 0 0.16666666666666666em 0.16666666666666666em -0.08333333333333333em rgba(0, 0, 0, 0.5);
+  -o-box-shadow: inset 0 0.08333333333333333em 0.08333333333333333em rgba(255, 255, 255, 0.4), 0 0.16666666666666666em 0.16666666666666666em -0.08333333333333333em rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0.08333333333333333em 0.08333333333333333em rgba(255, 255, 255, 0.4), 0 0.16666666666666666em 0.16666666666666666em -0.08333333333333333em rgba(0, 0, 0, 0.5);
+  background: #dbdada;
+  background: -moz-linear-gradient(top, #ffffff 0, #dbdada 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(100%, #dbdada));
+  background: -webkit-linear-gradient(top, #ffffff 0, #dbdada 100%);
+  background: -o-linear-gradient(top, #ffffff 0, #dbdada 100%);
+  background: -ms-linear-gradient(top, #ffffff 0, #dbdada 100%);
+  background: linear-gradient(to bottom, #ffffff 0, #dbdada 100%);
+}
+.lte7 .button {
+  display: inline;
+  zoom: 1;
+}
+.button:hover,
+.button:focus {
+  color: #6a6667;
+  border-color: #a9a6a7;
+}
+p .button {
+  margin-top: 0;
+}
+.button.tiny {
+  padding: 0.4166666666666667em 0.75em;
+  border-width: 0.1em;
+  font-size: 10px;
+  font-size: 0.625rem;
+}
+.button.small {
+  border-width: 0.1em;
+  font-size: 10px;
+  font-size: 0.625rem;
+}
+.button.large {
+  border-width: 0.0625em;
+  font-size: 16px;
+  font-size: 1rem;
+}
+.button.full-width {
+  width: 100%;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: center;
+}
+.button.blue,
+.button.primary {
+  color: #2575ae;
+}
+.button.blue:hover,
+.button.primary:hover,
+.button.blue:focus,
+.button.primary:focus {
+  color: #1c5984;
+  border-color: #1c5984;
+}
+.button.red,
+.button.danger {
+  color: #e63c4d;
+}
+.button.red:hover,
+.button.danger:hover,
+.button.red:focus,
+.button.danger:focus {
+  color: #d41b2e;
+  border-color: #d41b2e;
+}
+/*
+
+Modules
+
+Layout modules that can be used, reused, and extended in many ways.
+
+Styleguide 4.0
+
+*/
+.js .menu .nav {
+  max-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+.js .menu .nav.is-current {
+  max-height: 999px;
+}
+.js .menu .nav.is-current,
+.js .menu .nav.is-visited {
+  -webkit-transition: all 0.65s ease-in-out;
+  -moz-transition: all 0.65s ease-in-out;
+  -o-transition: all 0.65s ease-in-out;
+  transition: all 0.65s ease-in-out;
+}
+/*
+
+Nav Bar
+
+A quick navigation bar, typically good for prototyping the main menu of a site.
+
+Markup:
+<nav class="menu nav-bar">
+    <h3 id="reveal-main-nav" class="title" data-reveal="main-nav-list">
+        <b class="button-label">Menu</b>
+    </h3>
+    <ul id="main-nav-list" class="forceful nav">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#" class="is-current">Contact Us</a></li>
+    </ul>
+</nav>
+
+Styleguide 8.1
+
+*/
+.nav-bar .title {
+  padding: 0.8333333333333334em 4%;
+  display: block;
+  color: #ffffff;
+  cursor: pointer;
+  background: #154262;
+  background: -moz-linear-gradient(top, #184b6f 0, #154262 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #184b6f), color-stop(100%, #154262));
+  background: -webkit-linear-gradient(top, #184b6f 0, #154262 100%);
+  background: -o-linear-gradient(top, #184b6f 0, #154262 100%);
+  background: -ms-linear-gradient(top, #184b6f 0, #154262 100%);
+  background: linear-gradient(to bottom, #184b6f 0, #154262 100%);
+  margin-top: 1.6666666666666667em;
+}
+.nav-bar .title:hover,
+.nav-bar .title:focus,
+.nav-bar .title.is-current {
+  background: #0f2e45;
+  background: -moz-linear-gradient(top, #133c5a 0, #0f2e45 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #133c5a), color-stop(100%, #0f2e45));
+  background: -webkit-linear-gradient(top, #133c5a 0, #0f2e45 100%);
+  background: -o-linear-gradient(top, #133c5a 0, #0f2e45 100%);
+  background: -ms-linear-gradient(top, #133c5a 0, #0f2e45 100%);
+  background: linear-gradient(to bottom, #133c5a 0, #0f2e45 100%);
+}
+.nav-bar .nav {
+  margin: 0;
+  background: #0f2e45;
+}
+.nav-bar .nav a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.8333333333333334em 4%;
+  font-family: "Source Sans Pro Bold", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", Arial, sans-serif;
+}
+.nav-bar .nav a:hover,
+.nav-bar .nav a:focus,
+.nav-bar .nav a.is-current {
+  background: #0a2030;
+}
+.vertical-nav .current a {
+  color: #184b6f;
+  background: rgba(37, 117, 174, 0.09999999999999998);
+}
+.vertical-nav li:first-child a {
+  border: none;
+}
+.vertical-nav a {
+  color: #184b6f;
+  padding: 0.4166666666666667em 0.75em;
+  display: block;
+  text-decoration: none;
+  font-family: "Source Sans Pro Bold", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", Arial, sans-serif;
+}
+.vertical-nav a:hover,
+.vertical-nav a:focus {
+  background: rgba(37, 117, 174, 0.09999999999999998);
+}
+.vertical-nav .is-current {
+  background: rgba(37, 117, 174, 0.09999999999999998);
+}
+.vertical-nav li ul {
+  margin: 0;
+  padding: 0 0 0 1.5em;
+}
+.vertical-nav li ul li {
+  list-style: none outside none;
+}
+/*
+Panel
+
+Used to provide messaging to the user, whether it be direct or through calls to action. 
+The panel typically indicates a visual separation and implied sub-grouping of its content.
+
+Markup:
+<div class="{$modifiers} panel">
+    <h2>This is a Panel</h2>
+    <p>This is a feedback message for the user.</p>
+    <p><a href="#" class="button">User Action</a></p>
+</div>
+<div class="{$modifiers} panel">
+    <p>This is a feedback panel with no heading.</p>
+</div>
+
+.inset - Adding this class modifies the look of the panel to a more "sunken in" aesthetic
+
+Styleguide 4.1
+*/
+.panel {
+  padding: 3.3333333333333335em;
+  background-color: #f2f1f1;
+  margin-top: 1.6666666666666667em;
+}
+.panel > :first-child {
+  margin-top: 0;
+}
+.panel.thin {
+  padding: 1.6666666666666667em;
+}
+/*
+Alert Panel
+
+This variation of the standard `.panel` is used specifically for delivering 
+direct messages to the user, whether they be informative, complimentary, 
+or preventative.
+
+Markup:
+<div class="{$modifiers} alert panel">
+    <h2>This is an Alert Panel</h2>
+    <p>This is a feedback message for the user.</p>
+    <p><a href="#" class="button">User Action</a></p>
+</div>
+<div class="{$modifiers} alert panel">
+    <p>This is an alert panel with no heading.</p>
+</div>
+
+.error - 
+.success - 
+.info - 
+
+Styleguide 4.1.1
+*/
+.panel.alert {
+  padding: 3.3333333333333335em;
+  border: 0.08333333333333333em solid;
+  border: 1px solid #e7e7e7;
+  background-color: rgba(255, 255, 255, 0.050000000000000044);
+  -webkit-border-radius: 0.4166666666666667em;
+  -moz-border-radius: 0.4166666666666667em;
+  -o-border-radius: 0.4166666666666667em;
+  border-radius: 0.4166666666666667em;
+  -webkit-box-shadow: 0 0.08333333333333333em 0.25em rgba(67, 65, 66, 0.15000000000000002);
+  -moz-box-shadow: 0 0.08333333333333333em 0.25em rgba(67, 65, 66, 0.15000000000000002);
+  -o-box-shadow: 0 0.08333333333333333em 0.25em rgba(67, 65, 66, 0.15000000000000002);
+  box-shadow: 0 0.08333333333333333em 0.25em rgba(67, 65, 66, 0.15000000000000002);
+}
+.panel.alert h1,
+.panel.alert h2,
+.panel.alert h3,
+.panel.alert h4,
+.panel.alert h5,
+.panel.alert h6 {
+  color: #184b6f;
+}
+.panel.alert.error {
+  border: 1px solid #c29398;
+  background-color: rgba(242, 150, 160, 0.050000000000000044);
+}
+.panel.alert.error h1,
+.panel.alert.error h2,
+.panel.alert.error h3,
+.panel.alert.error h4,
+.panel.alert.error h5,
+.panel.alert.error h6 {
+  color: #e63c4d;
+}
+.panel.alert.success {
+  border: 1px solid #449465;
+  background-color: rgba(28, 239, 114, 0.050000000000000044);
+}
+.panel.alert.success h1,
+.panel.alert.success h2,
+.panel.alert.success h3,
+.panel.alert.success h4,
+.panel.alert.success h5,
+.panel.alert.success h6 {
+  color: #0b9a45;
+}
+.panel.alert.info {
+  border: 1px solid #4f5f6b;
+  background-color: rgba(41, 131, 195, 0.050000000000000044);
+}
+.panel.alert.info h1,
+.panel.alert.info h2,
+.panel.alert.info h3,
+.panel.alert.info h4,
+.panel.alert.info h5,
+.panel.alert.info h6 {
+  color: #184b6f;
+}
+.panel.inset {
+  text-shadow: 0 0.08333333333333333em 0.08333333333333333em #ffffff;
+  -webkit-box-shadow: inset 0 0.08333333333333333em 0.25em rgba(67, 65, 66, 0.15000000000000002);
+  -moz-box-shadow: inset 0 0.08333333333333333em 0.25em rgba(67, 65, 66, 0.15000000000000002);
+  -o-box-shadow: inset 0 0.08333333333333333em 0.25em rgba(67, 65, 66, 0.15000000000000002);
+  box-shadow: inset 0 0.08333333333333333em 0.25em rgba(67, 65, 66, 0.15000000000000002);
+  background: #fcfcfc;
+  background: -moz-linear-gradient(top, #e8e7e7 0, #fcfcfc 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e8e7e7), color-stop(100%, #fcfcfc));
+  background: -webkit-linear-gradient(top, #e8e7e7 0, #fcfcfc 100%);
+  background: -o-linear-gradient(top, #e8e7e7 0, #fcfcfc 100%);
+  background: -ms-linear-gradient(top, #e8e7e7 0, #fcfcfc 100%);
+  background: linear-gradient(to bottom, #e8e7e7 0, #fcfcfc 100%);
+}
+/*
+Breadcrumb
+
+Another extension of the `.nav` module, adding a breadcrumb `.label`, 
+floating it and the ordered list and adding a `/` divider.
+
+Markup:
+<nav class="breadcrumb group">
+    <p class="label">You are here:</p>
+    <ol class="nav">
+        <li><a href="#">First Level</a></li>
+        <li><a href="#">Second Level</a></li>
+        <li><a href="#">Third Level</a></li>
+        <li><strong>Fourth Level</strong></li>
+    </ol>
+</nav>
+
+Styleguide 4.2
+*/
+.breadcrumb .label {
+  margin: 0 0.75em 0 0;
+  float: left;
+}
+.breadcrumb .nav {
+  margin: 0;
+  float: left;
+  text-transform: capitalize;
+}
+.breadcrumb li {
+  margin-right: 0.6666666666666666em;
+}
+.breadcrumb li:before {
+  content: "/";
+  margin-right: 0.6666666666666666em;
+}
+.breadcrumb li:first-child:before {
+  content: "";
+  margin: 0;
+}
+.tabs .nav {
+  border-bottom: 0.08333333333333333em solid #cfcdcd;
+}
+.tabs .nav a {
+  padding: 0.8333333333333334em 1.5em;
+  color: #cfcdcd;
+  text-decoration: none;
+  background-color: #ffffff;
+  position: relative;
+  bottom: -0.08333333333333333em;
+  z-index: 30;
+}
+.tabs .nav a:hover,
+.tabs .nav a:focus {
+  color: #434142;
+}
+.tabs .nav .is-current {
+  padding: 0.5833333333333334em 1.4166666666666667em 0.9166666666666666em;
+  color: #434142;
+  border-left: 0.08333333333333333em solid #cfcdcd;
+  border-right: 0.08333333333333333em solid #cfcdcd;
+  border-top: 0.25em solid #489cd8;
+  z-index: 60;
+}
+/*
+
+Figures
+
+Great for integrating images into bodies of text, the `.figure` class is paired with the `.float-left` or `.float-right` class depending on where you would like it placed.
+
+Markup:
+<figure class="figure float-left">
+    <img src="http://placehold.it/213" alt="An image floating left" />
+</figure>
+<p>He is here. No! Alderaan is peaceful. We have no weapons. You can't possibly&hellip; Kid, I've flown from one side of this galaxy to the other. I've seen a lot of strange stuff, but I've never seen anything to make me believe there's one all-powerful Force controlling everything. There's no mystical energy field that controls my destiny. It's all a lot of simple tricks and nonsense. I can't get involved! I've got work to do! It's not that I like the Empire, I hate it, but there's nothing I can do about it right now. It's such a long way from here. I'm surprised you had the courage to take the responsibility yourself. The more you tighten your grip, Tarkin, the more star systems will slip through your fingers.</p>
+<p>He is here. No! Alderaan is peaceful. We have no weapons. You can't possibly&hellip; Kid, I've flown from one side of this galaxy to the other. I've seen a lot of strange stuff, but I've never seen anything to make me believe there's one all-powerful Force controlling everything. There's no mystical energy field that controls my destiny. It's all a lot of simple tricks and nonsense. I can't get involved! I've got work to do! It's not that I like the Empire, I hate it, but there's nothing I can do about it right now. It's such a long way from here. I'm surprised you had the courage to take the responsibility yourself. The more you tighten your grip, Tarkin, the more star systems will slip through your fingers.</p>
+
+Styleguide 7.4
+
+*/
+.figure {
+  margin-top: 1.6666666666666667em;
+}
+.figure.float-left,
+.figure.float-right {
+  float: none;
+}
+.figure img {
+  display: block;
+}
+/*
+
+Forms
+
+Styleguide 5.0
+
+*/
+/*
+
+Basic Themed Elements
+
+Style `input`s/`textarea`s and set them to `width: 100%` to adapt to the width of their wrapper. (Great for grids.)
+
+Markup: <input type="text">
+<textarea></textarea>
+<select>
+    <option value="">Please Choose...</option>
+</select>
+
+Styleguide 5.1
+
+*/
+input,
+textarea {
+  width: 100%;
+  max-width: 50em;
+  font-size: 1em;
+  padding: 0.4166666666666667em 0.3333333333333333em;
+  background: #ffffff;
+  border: 0.08333333333333333em solid #a9a6a7;
+  outline: none;
+  font-family: "Source Sans Pro", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", sans-serif;
+  -webkit-border-radius: 0.16666666666666666em;
+  -moz-border-radius: 0.16666666666666666em;
+  -o-border-radius: 0.16666666666666666em;
+  border-radius: 0.16666666666666666em;
+  -webkit-box-shadow: inset 0 0.08333333333333333em 0.16666666666666666em #cfcdcd;
+  -moz-box-shadow: inset 0 0.08333333333333333em 0.16666666666666666em #cfcdcd;
+  -o-box-shadow: inset 0 0.08333333333333333em 0.16666666666666666em #cfcdcd;
+  box-shadow: inset 0 0.08333333333333333em 0.16666666666666666em #cfcdcd;
+}
+input:hover,
+textarea:hover,
+input:focus,
+textarea:focus,
+input:active,
+textarea:active,
+input.is-current,
+textarea.is-current {
+  border-color: #434142;
+  z-index: 1;
+  -webkit-box-shadow: 0 0.08333333333333333em 0.3333333333333333em #cfcdcd;
+  -moz-box-shadow: 0 0.08333333333333333em 0.3333333333333333em #cfcdcd;
+  -o-box-shadow: 0 0.08333333333333333em 0.3333333333333333em #cfcdcd;
+  box-shadow: 0 0.08333333333333333em 0.3333333333333333em #cfcdcd;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+}
+input[type="checkbox"] .lte7,
+input[type="radio"] .lte7 {
+  width: 13px;
+}
+textarea {
+  height: 6.666666666666667em;
+}
+select {
+  width: auto;
+  max-width: 100%;
+  font-size: 0.8125em;
+}
+/*
+
+Useful Input Widths
+
+Useful widths for form inputs, both fixed- and fluid-width.
+
+Markup: <input type="text" class="{$modifiers}" placeholder="Sample placeholder text">
+
+.input-xxxs - 
+.input-xxs - 
+.input-xs - 
+.input-s - 
+.input-m - 
+.input-l - 
+.gt-quarter.gd-quarter - Using the grid system for a 25% width
+.gt-third.gd-third - Using the grid system for a 33% width
+.gt-half.gd-half - Using the grid system for a 50% width
+
+Styleguide 5.2
+
+*/
+.input-eighth {
+  width: 12.5%;
+}
+.input-quarter {
+  width: 25%;
+}
+.input-half {
+  width: 50%;
+}
+.input-xxxs {
+  width: 2.5em;
+}
+.input-xxs {
+  width: 4.166666666666667em;
+}
+.input-xs {
+  width: 8.333333333333334em;
+}
+.input-s {
+  width: 14.583333333333334em;
+}
+.input-m {
+  width: 20.833333333333332em;
+}
+.input-l {
+  width: 29.166666666666668em;
+  max-width: 100%;
+}
+/*
+Input Label
+
+Markup: <label class="input-label">
+    Input Label
+    <input class="input-l" type="email" placeholder="Ex: name@email.com">
+</label>
+
+Styleguide 5.3
+*/
+/*
+Input Label with Hint
+
+Markup: <label class="input-label">
+    Input Label
+    <input class="input-l" type="email" placeholder="Ex: name@email.com">
+    <small class="hint">This is a hint.</small>
+</label>
+
+Styleguide 5.3.1
+*/
+.input-label {
+  display: block;
+  padding-top: 1.6666666666666667em;
+}
+.input-label input,
+.input-label textarea,
+.input-label select {
+  margin-top: 0.4166666666666667em;
+  margin-bottom: 0.4166666666666667em;
+}
+.input-label .hint {
+  color: #a9a6a7;
+  font-family: "Source Sans Pro", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", sans-serif;
+  margin-top: 0.4166666666666667em;
+}
+.input-desc {
+  /* Mixins */
+
+  font-family: "Source Sans Pro", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", sans-serif;
+  margin-top: 0em;
+  /* Display & Box Model */
+
+  display: block;
+}
+.fieldset {
+  /* Mixins */
+
+  margin-top: 1.6666666666666667em;
+  padding-bottom: 1.6666666666666667em;
+}
+.checkbox-list {
+  /* Mixins */
+
+  margin-top: 0.8333333333333334em;
+}
+legend + .checkbox-list {
+  /* Mixins */
+
+  margin-top: 0em;
+}
+legend .input-label {
+  /* Mixins */
+
+  padding-bottom: 0.4166666666666667em;
+}
+legend + .input-desc {
+  /* Variables */
+
+  /* Positioning */
+
+  position: relative;
+  top: -0.4166666666666667em;
+}
+.search .input {
+  /* Mixins */
+
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-top-right-radius: 0;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-topright: 0;
+  -o-border-bottom-right-radius: 0;
+  -o-border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  /* Display & Box Model */
+
+  float: left;
+}
+.search .submit {
+  /* Mixins */
+
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  -o-border-bottom-left-radius: 0;
+  -o-border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  /* Display & Box Model */
+
+  margin: 0;
+  float: left;
+}
+/*
+Form Validation
+
+Markup: <label class="input-label {$modifiers}">
+    Telephone
+    <input class="input-s" type="tel" value="555-555-5555">
+</label>
+
+.error - 
+.success - 
+
+Styleguide 5.4
+*/
+.success input,
+.success textarea,
+.success select {
+  border-color: #0b9a45;
+}
+.error input,
+.error textarea,
+.error select {
+  border-color: #e63c4d;
+}
+/*
+Form Messaging
+
+Markup: <label class="input-label">
+    Form Bubble
+    <input type="tel" placeholder="XXX-XXX-XXXX">
+    <small class="input-alert {$modifiers} bubble">
+        A message pertaining to this field.
+    </small>
+</label>
+
+.info - 
+.warning - 
+.error - 
+.success - 
+
+Styleguide 5.5
+*/
+.bubble {
+  margin: 0;
+  padding: 0.8333333333333334em;
+  background-color: #ffffff;
+  position: relative;
+  -webkit-border-radius: 0.4166666666666667em;
+  -moz-border-radius: 0.4166666666666667em;
+  -o-border-radius: 0.4166666666666667em;
+  border-radius: 0.4166666666666667em;
+  -webkit-box-shadow: 0 0 0.5833333333333334em rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 0.5833333333333334em rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 0 0.5833333333333334em rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0.5833333333333334em rgba(0, 0, 0, 0.5);
+  -webkit-transition: opacity 0.15s linear;
+  -moz-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+.bubble:after {
+  position: absolute;
+  border: 0.4166666666666667em solid transparent;
+  content: "";
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+.bubble.left-wisp:after,
+.bubble.right-wisp:after {
+  top: 50%;
+  margin-top: -0.4166666666666667em;
+}
+.bubble.left-wisp:after {
+  left: -0.8333333333333334em;
+  border-right-color: #ffffff;
+}
+.bubble.right-wisp:after {
+  right: -0.8333333333333334em;
+  border-left-color: #ffffff;
+}
+.bubble.top-wisp:after,
+.bubble.bottom-wisp:after {
+  left: 50%;
+  margin-left: -0.4166666666666667em;
+}
+.bubble.top-wisp:after {
+  top: -0.8333333333333334em;
+  border-bottom-color: #ffffff;
+}
+.bubble.bottom-wisp:after {
+  bottom: -0.8333333333333334em;
+  border-top-color: #ffffff;
+}
+.bubble.input-alert {
+  padding: 0.4166666666666667em 0.8333333333333334em;
+  color: #ffffff;
+  font-family: "Source Sans Pro", Helvetica, Arial, "Arial Unicode", "Lucida Sans Unicode", sans-serif;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  box-shadow: none;
+  display: inline-block;
+}
+.lte7 .bubble.input-alert {
+  display: inline;
+  zoom: 1;
+}
+.bubble.input-alert:after {
+  left: 0.8333333333333334em;
+  margin-left: 0;
+  top: -0.8333333333333334em;
+  border-bottom-color: #ffffff;
+}
+.bubble.input-alert.warning {
+  background-color: #ec8e04;
+}
+.bubble.input-alert.warning:after {
+  border-bottom-color: #ec8e04;
+}
+.bubble.input-alert.info {
+  background-color: #184b6f;
+}
+.bubble.input-alert.info:after {
+  border-bottom-color: #184b6f;
+}
+.bubble.input-alert.error {
+  background-color: #e63c4d;
+}
+.bubble.input-alert.error:after {
+  border-bottom-color: #e63c4d;
+}
+.bubble.input-alert.success {
+  background-color: #0b9a45;
+}
+.bubble.input-alert.success:after {
+  border-bottom-color: #0b9a45;
+}
+.no-boxshadow .bubble {
+  border: 0.08333333333333333em solid #a9a6a7;
+}
+/*
+
+Tables
+
+Styleguide 6.0
+
+*/
+/*
+
+Default Tables
+
+Simple, clean default styles. Just mark it up like a normal table.
+
+Markup:
+<table>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Language</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Some</td>
+            <td>One</td>
+            <td>English</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Joe</td>
+            <td>Sixpack</td>
+            <td>English</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Stu</td>
+            <td>Dent</td>
+            <td>Code</td>
+        </tr>
+    </tbody>
+</table>
+
+Styleguide 6.1
+
+*/
+table {
+  width: 100%;
+  max-width: 100%;
+}
+table th,
+table td {
+  padding: 0.8333333333333334em 0.75em 0.75em;
+}
+table th {
+  padding-top: 0.75em;
+  border-bottom: 0.08333333333333333em solid #cfcdcd;
+}
+table th + th,
+table td + td {
+  border-left: 0.08333333333333333em solid #cfcdcd;
+}
+table tr + tr td {
+  border-top: 0.08333333333333333em solid #cfcdcd;
+}
+/*
+
+Other
+
+Styleguide 8.0
+
+*/
+.wrapper {
+  width: 92%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.media-object .object {
+  max-width: 40%;
+  margin-right: 3em;
+  float: left;
+}
+.media-object .desc > :first-child {
+  margin-top: 0;
+}
+.media-object.half {
+  margin-right: 0.75em;
+}
+.media-object.half .object {
+  margin-right: 0.75em;
+}
+.main-nav {
+  width: 16em;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: -16em;
+}
+.figure {
+  max-width: 50%;
+  margin-top: 0;
+}
+.figure.float-left,
+.figure.float-right {
+  padding-bottom: 0.8333333333333334em;
+}
+.figure.float-left {
+  float: left;
+  padding-right: 3em;
+}
+.figure.float-right {
+  float: right;
+  padding-left: 3em;
+}
+.figure img {
+  display: block;
+}
+.nav-bar .nav li {
+  width: 50%;
+}
+.nav-bar .nav a {
+  padding: 0.8333333333333334em 1.5em;
+}
+table th,
+table td {
+  padding: 0.8333333333333334em 1.5em 0.75em;
+}
+table th {
+  padding-top: 0.75em;
+  border-bottom: 0.08333333333333333em solid #cfcdcd;
+}
+/*
+Tablet Responsive Grid
+
+`.gt-` signifies "grid, tablet"
+
+Markup:
+<div class="gt-row">
+	<div class="gt-columns gt-half">
+		<div class="thin panel">Half</div>
+	</div>
+	<div class="gt-columns gt-half">
+		<div class="thin panel">Half</div>
+	</div>
+</div>
+<div class="gt-row">
+	<div class="gt-columns gt-third">
+		<div class="thin panel">Third</div>
+	</div>
+	<div class="gt-columns gt-third">
+		<div class="thin panel">Third</div>
+	</div>
+	<div class="gt-columns gt-third">
+		<div class="thin panel">Third</div>
+	</div>
+</div>
+<div class="gt-row">
+	<div class="gt-columns gt-third">
+		<div class="thin panel">Third</div>
+	</div>
+	<div class="gt-columns gt-two-thirds">
+		<div class="thin panel">Two Thirds</div>
+	</div>
+</div>
+
+Styleguide 7.1.2
+*/
+.gt-row {
+  margin-left: -1.3333333333333333em;
+  margin-right: -1.3333333333333333em;
+}
+.lte7 .gt-row {
+  zoom: 1;
+}
+.gt-row:before,
+.gt-row:after {
+  content: "\0020";
+  height: 0;
+  display: block;
+  overflow: hidden;
+}
+.gt-row:after {
+  clear: both;
+}
+.gt-row.gt-rtl .gt-columns {
+  float: right;
+}
+.gt-row.gt-ltr .gt-columns {
+  float: left;
+}
+.gt-columns {
+  display: inline;
+  float: left;
+  padding-left: 1.3333333333333333em;
+  padding-right: 1.3333333333333333em;
+}
+.gt-1of9 {
+  width: 11.11111111111111%;
+}
+.gt-2of9 {
+  width: 22.22222222222222%;
+}
+.gt-quarter {
+  width: 25%;
+}
+.gt-3of9,
+.gt-2of6,
+.gt-third {
+  width: 33.33333333333333%;
+}
+.gt-4of9 {
+  width: 44.44444444444444%;
+}
+.gt-half {
+  width: 50%;
+}
+.gt-5of9 {
+  width: 55.55555555555556%;
+}
+.gt-2of5 {
+  width: 40%;
+}
+.gt-3of5 {
+  width: 60%;
+}
+.gt-6of9,
+.gt-4of6,
+.gt-two-thirds {
+  width: 66.66666666666666%;
+}
+.gt-three-quarters {
+  width: 75%;
+}
+.gt-7of9 {
+  width: 77.77777777777779%;
+}
+.gt-2of7 {
+  width: 28.57142857142857%;
+}
+.gt-3of7 {
+  width: 42.857142857142854%;
+}
+.gt-4of7 {
+  width: 57.14285714285714%;
+}
+.gt-5of7 {
+  width: 71.42857142857143%;
+}
+.gt-8of9 {
+  width: 88.88888888888889%;
+}
+.gt-3of8 {
+  width: 37.5%;
+}
+.gt-5of8 {
+  width: 62.5%;
+}
+.gt-full {
+  width: 100%;
+}
+.gt-clear {
+  clear: both;
+}
+/*
+Desktop Responsive Grid
+
+**Note:** On desktop viewports, this styleguide's layout is set to have a 25% sidebar and 75% main content area.
+
+`.gd-` signifies "grid, desktop"
+
+Markup:
+<div class="gd-row">
+    <div class="gd-columns gd-half">
+        <div class="thin panel">Half</div>
+    </div>
+    <div class="gd-columns gd-half">
+        <div class="thin panel">Half</div>
+    </div>
+</div>
+<div class="gd-row">
+    <div class="gd-columns gd-third">
+        <div class="thin panel">Third</div>
+    </div>
+    <div class="gd-columns gd-third">
+        <div class="thin panel">Third</div>
+    </div>
+    <div class="gd-columns gd-third">
+        <div class="thin panel">Third</div>
+    </div>
+</div>
+<div class="gd-row">
+    <div class="gd-columns gd-third">
+        <div class="thin panel">Third</div>
+    </div>
+    <div class="gd-columns gd-two-thirds">
+        <div class="thin panel">Two Thirds</div>
+    </div>
+</div>
+<div class="gd-row">
+    <div class="gd-columns gd-quarter">
+        <div class="thin panel">Quarter</div>
+    </div>
+    <div class="gd-columns gd-quarter">
+        <div class="thin panel">Quarter</div>
+    </div>
+    <div class="gd-columns gd-quarter">
+        <div class="thin panel">Quarter</div>
+    </div>
+    <div class="gd-columns gd-quarter">
+        <div class="thin panel">Quarter</div>
+    </div>
+</div>
+
+Styleguide 7.1.3
+*/
+.gd-row {
+  margin-left: -1.5em;
+  margin-right: -1.5em;
+}
+.lte7 .gd-row {
+  zoom: 1;
+}
+.gd-row:before,
+.gd-row:after {
+  content: "\0020";
+  height: 0;
+  display: block;
+  overflow: hidden;
+}
+.gd-row:after {
+  clear: both;
+}
+.gd-row.gd-rtl .gd-columns {
+  float: right;
+}
+.gd-row.gd-ltr .gd-columns {
+  float: left;
+}
+.gd-columns {
+  display: inline;
+  float: left;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
+.gd-1of12 {
+  width: 8.333333333333332%;
+}
+.gd-2of12 {
+  width: 16.666666666666664%;
+}
+.gd-3of12,
+.gd-2of8,
+.gd-quarter {
+  width: 25%;
+}
+.gd-4of12,
+.gd-3of9,
+.gd-2of6,
+.gd-third {
+  width: 33.33333333333333%;
+}
+.gd-5of12 {
+  width: 41.66666666666667%;
+}
+.gd-2of10,
+.gd-1of5 {
+  width: 20%;
+}
+.gd-4of10,
+.gd-2of5 {
+  width: 40%;
+}
+.gd-6of10,
+.gd-3of5 {
+  width: 60%;
+}
+.gd-8of10,
+.gd-4of5 {
+  width: 80%;
+}
+.gd-6of12,
+.gd-3of6,
+.gd-4of8,
+.gd-5of10,
+.gd-2of4,
+.gd-half {
+  width: 50%;
+}
+.gd-7of12 {
+  width: 58.333333333333336%;
+}
+.gd-2of7 {
+  width: 28.57142857142857%;
+}
+.gd-3of7 {
+  width: 42.857142857142854%;
+}
+.gd-4of7 {
+  width: 57.14285714285714%;
+}
+.gd-5of7 {
+  width: 71.42857142857143%;
+}
+.gd-8of12,
+.gd-4of6,
+.gd-6of9,
+.gd-two-thirds {
+  width: 66.66666666666666%;
+}
+.gd-3of8 {
+  width: 37.5%;
+}
+.gd-5of8 {
+  width: 62.5%;
+}
+.gd-6of8,
+.gd-9of12,
+.gd-three-quarters {
+  width: 75%;
+}
+.gd-2of9 {
+  width: 22.22222222222222%;
+}
+.gd-5of9 {
+  width: 55.55555555555556%;
+}
+.gd-7of9 {
+  width: 77.77777777777779%;
+}
+.gd-10of12 {
+  width: 83.33333333333334%;
+}
+.gd-3of10 {
+  width: 30%;
+}
+.gd-7of10 {
+  width: 70%;
+}
+.gd-11of12 {
+  width: 91.66666666666666%;
+}
+.gd-2of11 {
+  width: 18.181818181818183%;
+}
+.gd-9of11 {
+  width: 81.81818181818183%;
+}
+.gd-full {
+  width: 100%;
+}
+.gd-clear {
+  clear: both;
+}
+html,
+body {
+  min-width: 992px;
+}
+.wrapper {
+  width: 92%;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media print {
+  * {
+    background: transparent	!important;
+    color: black		!important;
+    box-shadow: none		!important;
+    text-shadow: none		!important;
+  }
+  html {
+    font: 12pt/1.5em Georgia, "Times New Roman", Times, serif;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: bold;
+    line-height: 1.1em;
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+    page-break-after: avoid;
+    orphans: 3;
+    widows: 3;
+  }
+  li h1,
+  li h2,
+  li h3,
+  li h4,
+  li h5,
+  li h6 {
+    margin-top: 0;
+  }
+  h1 {
+    font-size: 24pt;
+  }
+  h2 {
+    font-size: 21pt;
+  }
+  h3 {
+    font-size: 18pt;
+  }
+  h4 {
+    font-size: 16pt;
+  }
+  h5 {
+    font-size: 14pt;
+  }
+  h6 {
+    font-size: 12pt;
+  }
+  blockquote,
+  p,
+  ul,
+  ol,
+  dl,
+  figure,
+  img {
+    margin-bottom: 1em;
+  }
+  figure img {
+    margin-bottom: 0;
+  }
+  ul,
+  ol,
+  dd {
+    margin-left: 3em;
+  }
+  pre,
+  blockquote {
+    border-left: 0.5em solid #999;
+    padding-left: 1.5em;
+    page-break-inside: avoid;
+  }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+  figcaption {
+    text-transform: uppercase;
+    font-size: 10pt;
+  }
+  strong {
+    font-weight: bold;
+  }
+  em {
+    font-style: italic;
+  }
+  thead {
+    display: table-header-group;
+  }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  img {
+    max-width: 100%		!important;
+  }
+  form,
+  video,
+  nav {
+    display: none		!important;
+  }
+  @page  {
+    margin: 2cm;
+  }
+}

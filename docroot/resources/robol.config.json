@@ -1,0 +1,132 @@
+{
+    "scripts"   :   [
+
+        {
+            "_description"  :   "CLIENT: Helpers",
+            "input_dir"     :   "js",
+            "input_files"   :   [
+                "themes/client/modernizr.js",
+                "helpers/viewport.js",
+                "helpers/loadScript.js"
+            ],
+            "output_dir"    :   "c/js",
+            "output_file"   :   "helpers.min.js",
+            "minify"        :   false,
+            "minify_config" :   {
+                "mangle"    :   true,
+                "squeeze"   :   true
+            },
+            "lint"          :   false,
+            "lint_config"   :   {}
+        },
+
+        {
+            "_description"  :   "CLIENT: Libs and Plugins",
+            "input_dir"     :   "js",
+            "input_files"   :   [
+                "libs/jquery.js"
+            ],
+            "output_dir"    :   "c/js",
+            "output_file"   :   "plugins.min.js",
+            "minify"        :   false,
+            "minify_config" :   {
+                "mangle"    :   true,
+                "squeeze"   :   true
+            },
+            "lint"          :   false,
+            "lint_config"   :   {}
+        },
+
+        {
+            "_description"  :   "CLIENT: Actions",
+            "input_dir"     :   "js/themes/client",
+            "input_files"   :   [
+                "actions.js"
+            ],
+            "output_dir"    :   "c/js",
+            "output_file"   :   "actions.min.js",
+            "minify"        :   false,
+            "minify_config" :   {
+                "mangle"    :   true,
+                "squeeze"   :   true
+            },
+            "lint"          :   false,
+            "lint_config"   :   {}
+        },
+
+       
+
+        {
+            "_description"  :   "LB Reveal",
+            "input_dir"     :   "js/plugins",
+            "input_files"   :   [
+                "jquery.lb-reveal.js"
+            ],
+            "output_dir"    :   "c/js",
+            "output_file"   :   "jquery.lb-reveal.min.js",
+            "minify"        :   false,
+            "minify_config" :   {
+                "mangle"    :   true,
+                "squeeze"   :   true
+            },
+            "lint"          :   false,
+            "lint_config"   :   {}
+        },
+
+        {
+            "_description"  :   "LB Validation",
+            "input_dir"     :   "js/plugins",
+            "input_files"   :   [
+                "jquery.lb-validation.js"
+            ],
+            "output_dir"    :   "c/js",
+            "output_file"   :   "jquery.lb-validation.min.js",
+            "minify"        :   false,
+            "minify_config" :   {
+                "mangle"    :   true,
+                "squeeze"   :   true
+            },
+            "lint"          :   false,
+            "lint_config"   :   {}
+        }
+
+    ],
+
+    "styles"    :   [
+
+        {
+            "_description"  :   "CLIENT: Global",
+            "input_dir"     :   "less/themes/client",
+            "input_files"   :   [
+                "global.less"
+            ],
+            "output_dir"    :   "c/css",
+            "output_file"   :   "global.css",
+            "minify"        :   false,
+            "minify_config" :   {
+                "yuicompress"   :   true
+            },
+            "lint"          :   false,
+            "lint_config"   :   {}
+        },
+
+        {
+            "_description"  :   "CLIENT: Global (Fixed)",
+            "input_dir"     :   "less/themes/client",
+            "input_files"   :   [
+                "global-fixed.less"
+            ],
+            "output_dir"    :   "c/css",
+            "output_file"   :   "global-fixed.css",
+            "minify"        :   false,
+            "minify_config" :   {
+                "yuicompress"   :   true
+            },
+            "lint"          :   false,
+            "lint_config"   :   {}
+        }
+
+        
+
+    ]
+}
